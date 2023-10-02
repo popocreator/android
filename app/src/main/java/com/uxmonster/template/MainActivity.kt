@@ -4,22 +4,13 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import com.uxmonster.template.debug.DebugActivity
 import com.uxmonster.template.navigation.NavigationController
 import com.uxmonster.template.permission.PermissionController
 
 class MainActivity : DebugActivity() {
-
-    private val getContent = registerForActivityResult(
-        ActivityResultContracts.GetContent()
-    ) { uri: Uri? ->
-        activityResultCallback(uri)
-    }
-
-    private fun activityResultCallback(uri: Uri?) {
-        Log.d("${this.javaClass.name}", "onActivityResult - ${uri.toString()}")
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,9 +19,11 @@ class MainActivity : DebugActivity() {
         PermissionController.checkPermissions(this)
         PermissionController.requestPermissions(this)
 
-//        NavigationController.moveFromMainActivityToSomeActivity(this)
+        NavigationController.moveFromMainActivityToSomeActivity(this)
 
-        getContent.launch(null)
+        getDataByActivity1.launch(Intent())
+        getDataByActivity2.launch(Intent())
+        getDataByActivity3.launch(Intent())
     }
 
     override fun onRequestPermissionsResult(
@@ -40,6 +33,42 @@ class MainActivity : DebugActivity() {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         PermissionController.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    }
+
+    private val getDataByActivity1 = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        activity1ResultCallback(result)
+    }
+    private fun activity1ResultCallback(result: ActivityResult) {
+        Log.d("${this.javaClass.name}", "onActivityResult - ${result.resultCode}")
+        if (result.resultCode == RESULT_OK) {
+            // 백 버튼으로 돌아오는 경우를 제외함
+        }
+    }
+
+    private val getDataByActivity2 = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        activity2ResultCallback(result)
+    }
+    private fun activity2ResultCallback(result: ActivityResult) {
+        Log.d("${this.javaClass.name}", "onActivityResult - ${result.resultCode}")
+        if (result.resultCode == RESULT_OK) {
+            // 백 버튼으로 돌아오는 경우를 제외함
+        }
+    }
+
+    private val getDataByActivity3 = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        activity3ResultCallback(result)
+    }
+    private fun activity3ResultCallback(result: ActivityResult) {
+        Log.d("${this.javaClass.name}", "onActivityResult - ${result.resultCode}")
+        if (result.resultCode == RESULT_OK) {
+            // 백 버튼으로 돌아오는 경우를 제외함
+        }
     }
 
 }
