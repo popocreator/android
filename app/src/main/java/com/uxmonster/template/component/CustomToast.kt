@@ -7,6 +7,7 @@ import android.widget.TextView
 import android.widget.Toast
 import com.uxmonster.template.R
 
+// [사용목적] 액티비티 외에 백그라운드 서비스, 리시버 등의 상태를 나타낼 때
 class CustomToast {
     companion object {
         fun show(context: Context, message: String) {
